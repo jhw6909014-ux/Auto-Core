@@ -1,0 +1,47 @@
+name: Scheduled AutoCore Run
+on:
+  schedule:
+    - cron: '0 * * * *'   # 每小時觸發一次（UTC）
+  workflow_dispatch:
+
+jobs:
+  run-autocore:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install -e .
+
+      - name: Init DB
+        run: |
+          python - <<'PY'
+from core.db import init_db
+init_db()
+print("DB init done")
+PY
+
+      - name: Run auto cores (dry-run mode)
+        env:
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          BLOGGER_EMAIL: ${{ secrets.BLOGGER_EMAIL }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHANNEL_ID: ${{ secrets.TELEGRAM_CHANNEL_ID }}
+        run: |
+          # 這裡只做巡檢或 dry-run，實際上你可以呼叫子 bot 的 runner script
+          python - <<'PY'
+print("AutoCore scheduled check running")
+# You can call your bot modules here, example:
+# from bots.food import run
+# run(dry_run=True)
+PY
