@@ -2,8 +2,8 @@ name: Scheduled AutoCore Run
 
 on:
   schedule:
-    - cron: '0 * * * *'   # 每小時觸發一次（UTC 時間）
-  workflow_dispatch:      # 允許手動點擊按鈕觸發測試
+    - cron: '0 * * * *'   # 每小時觸發一次
+  workflow_dispatch:      # 允許手動觸發
 
 jobs:
   run-autocore:
@@ -37,12 +37,10 @@ jobs:
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           BLOGGER_EMAIL: ${{ secrets.BLOGGER_EMAIL }}
         run: |
-          # 這裡目前只做巡檢或 dry-run
           python - <<'PY'
           import os
           print("AutoCore scheduled check running...")
           
-          # 檢查環境變數是否讀取成功 (只印出前幾碼確保安全)
           key = os.environ.get("GOOGLE_API_KEY", "")
           if key:
               print(f"Google API Key detected: {key[:4]}***")
