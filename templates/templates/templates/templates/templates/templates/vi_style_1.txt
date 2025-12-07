@@ -1,1 +1,0 @@
-Viết bằng giọng hấp dẫn, ba đoạn: phần mở, phần nội dung, kết thúc kêu gọi hành động. Bao gồm nút mua hàng bằng HTML.
