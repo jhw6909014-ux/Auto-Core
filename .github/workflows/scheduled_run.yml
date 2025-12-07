@@ -22,7 +22,7 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
           pip install -e .
 
-     - name: Init DB
+      - name: Init DB
         run: |
           python - <<'PY'
           from core.db import init_db
