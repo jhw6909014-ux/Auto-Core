@@ -1,0 +1,11 @@
+google-generativeai
+feedparser
+requests
+python-dotenv
+beautifulsoup4
+lxml
+sqlite-utils
+APScheduler
+gunicorn
+flask
+python-slugify
