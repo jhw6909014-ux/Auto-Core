@@ -22,17 +22,12 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
           pip install -e .
 
-      - name: Init DB
+     - name: Init DB
         run: |
           python - <<'PY'
-          try:
-              from core.db import init_db
-              init_db()
-              print("DB init done")
-          except ImportError:
-              print("core.db module not found, skipping DB init for now")
-          except Exception as e:
-              print(f"DB Init failed: {e}")
+          from core.db import init_db
+          init_db()
+          print("DB init done")
           PY
 
       - name: Run auto cores (dry-run mode)
